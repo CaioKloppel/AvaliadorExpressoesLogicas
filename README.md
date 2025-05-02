@@ -73,7 +73,7 @@ A->B          // deve ser "A -> B"
 
 ---
 
-## 📤 Resultado esperado
+## 📤 Resultado 
 
 Para a entrada:
 ```
