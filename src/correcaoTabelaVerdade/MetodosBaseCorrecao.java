@@ -22,7 +22,6 @@ abstract class MetodosBaseCorrecao {
 
     static String checkPergunta(String pergunta){
         ArrayList<String> checker = new ArrayList<>(Arrays.asList(pergunta.trim().split(" ")));
-        System.out.println(checker);
         int quantidadeConectivos, quantidadeVariaveis, quantidadeParentesesAbertos, quantidadeParentesesFechados;
         quantidadeVariaveis = 0;
         for (String item : checker) {
