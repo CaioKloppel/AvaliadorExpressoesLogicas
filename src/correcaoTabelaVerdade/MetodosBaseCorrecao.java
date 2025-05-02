@@ -50,7 +50,7 @@ abstract class MetodosBaseCorrecao {
         quantidadeParentesesAbertos = Funcoes.quantidade(checker, "(");
         quantidadeParentesesFechados = Funcoes.quantidade(checker, ")");
 
-        if (quantidadeConectivos + 1 != quantidadeVariaveis || quantidadeParentesesAbertos != quantidadeParentesesFechados){
+        if (quantidadeConectivos + 1 != quantidadeVariaveis || quantidadeParentesesAbertos < quantidadeParentesesFechados){
             System.out.println("Insira a questão novamente, ocorreu um erro de digitação: ");
             String correcao = Input.getInstance().scanNextLine().toUpperCase();
             correcao = checkPergunta(correcao);
