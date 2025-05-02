@@ -8,7 +8,10 @@ import java.util.Arrays;
 
 abstract class MetodosPrincipaisCorrecao extends MetodosBaseCorrecao {
 
-    static ArrayList<String> listaFinal = new ArrayList<>();
+    private static final ArrayList<String> listaFinal = new ArrayList<>();
+
+    public static ArrayList<String> getListaFinal() { return listaFinal; }
+    static private int posicao = 0;
 
     static public void set_questao(ArrayList<String> questao){
             System.out.println("Insira a questão: ");
@@ -36,9 +39,13 @@ abstract class MetodosPrincipaisCorrecao extends MetodosBaseCorrecao {
                         String resultado = solveX(listaCheck);
                         if (resultado != null){
                             result(lista_resultado, index_noAnd, resultado);
+                        } else if (listaFinal.contains(lista_resultado.get(index_noAnd - 1) + " " + lista_resultado.get(index_noAnd) + " " + lista_resultado.get(index_noAnd + 1))){
+                            int index = listaFinal.indexOf(lista_resultado.get(index_noAnd - 1) + " " + lista_resultado.get(index_noAnd) + " " + lista_resultado.get(index_noAnd + 1));
+                            result(lista_resultado, index_noAnd, String.valueOf((char) ('W' + index)));
                         } else {
-                            listaFinal.addFirst(lista_resultado.get(index_noAnd - 1) + " " + lista_resultado.get(index_noAnd) + " " + lista_resultado.get(index_noAnd + 1));
-                            result(lista_resultado, index_noAnd, "X");
+                            listaFinal.add(lista_resultado.get(index_noAnd - 1) + " " + lista_resultado.get(index_noAnd) + " " + lista_resultado.get(index_noAnd + 1));
+                            result(lista_resultado, index_noAnd, String.valueOf((char) ('W' + posicao)));
+                            posicao++;
                         }
                     }
                 }else{
@@ -55,9 +62,13 @@ abstract class MetodosPrincipaisCorrecao extends MetodosBaseCorrecao {
                         String resultado = solveX(listaCheck);
                         if (resultado != null) {
                             result(lista_resultado, index_and, resultado);
+                        } else if (listaFinal.contains(lista_resultado.get(index_and - 1) + " " + lista_resultado.get(index_and) + " " + lista_resultado.get(index_and + 1))){
+                            int index = listaFinal.indexOf(lista_resultado.get(index_and - 1) + " " + lista_resultado.get(index_and) + " " + lista_resultado.get(index_and + 1));
+                            result(lista_resultado, index_and, String.valueOf((char) ('W' + index)));
                         } else {
-                            listaFinal.addFirst(lista_resultado.get(index_and - 1) + " " + lista_resultado.get(index_and) + " " + lista_resultado.get(index_and + 1));
-                            result(lista_resultado, index_and, "X");
+                            listaFinal.add(lista_resultado.get(index_and - 1) + " " + lista_resultado.get(index_and) + " " + lista_resultado.get(index_and + 1));
+                            result(lista_resultado, index_and, String.valueOf((char) ('W' + posicao)));
+                            posicao++;
                         }
                     }
                 }
@@ -79,9 +90,13 @@ abstract class MetodosPrincipaisCorrecao extends MetodosBaseCorrecao {
                         String resultado = solveX(listaCheck);
                         if (resultado != null) {
                             result(lista_resultado, index_noOr, resultado);
+                        } else if (listaFinal.contains(lista_resultado.get(index_noOr - 1) + " " + lista_resultado.get(index_noOr) + " " + lista_resultado.get(index_noOr + 1))){
+                            int index = listaFinal.indexOf(lista_resultado.get(index_noOr - 1) + " " + lista_resultado.get(index_noOr) + " " + lista_resultado.get(index_noOr + 1));
+                            result(lista_resultado, index_noOr, String.valueOf((char) ('W' + index)));
                         } else {
-                            listaFinal.addFirst(lista_resultado.get(index_noOr - 1) + " " + lista_resultado.get(index_noOr) + " " + lista_resultado.get(index_noOr + 1));
-                            result(lista_resultado, index_noOr, "X");
+                            listaFinal.add(lista_resultado.get(index_noOr - 1) + " " + lista_resultado.get(index_noOr) + " " + lista_resultado.get(index_noOr + 1));
+                            result(lista_resultado, index_noOr, String.valueOf((char) ('W' + posicao)));
+                            posicao++;
                         }
                     }
                 }else{
@@ -98,9 +113,13 @@ abstract class MetodosPrincipaisCorrecao extends MetodosBaseCorrecao {
                         String resultado = solveX(listaCheck);
                         if (resultado != null) {
                             result(lista_resultado, index_or, resultado);
+                        } else if (listaFinal.contains(lista_resultado.get(index_or - 1) + " " + lista_resultado.get(index_or) + " " + lista_resultado.get(index_or + 1))){
+                            int index = listaFinal.indexOf(lista_resultado.get(index_or - 1) + " " + lista_resultado.get(index_or) + " " + lista_resultado.get(index_or + 1));
+                            result(lista_resultado, index_or, String.valueOf((char) ('W' + index)));
                         } else {
-                            listaFinal.addFirst(lista_resultado.get(index_or - 1) + " " + lista_resultado.get(index_or) + " " + lista_resultado.get(index_or + 1));
-                            result(lista_resultado, index_or, "X");
+                            listaFinal.add(lista_resultado.get(index_or - 1) + " " + lista_resultado.get(index_or) + " " + lista_resultado.get(index_or + 1));
+                            result(lista_resultado, index_or, String.valueOf((char) ('W' + posicao)));
+                            posicao++;
                         }
                     }
                 }
@@ -121,9 +140,13 @@ abstract class MetodosPrincipaisCorrecao extends MetodosBaseCorrecao {
                         String resultado = solveX(listaCheck);
                         if (resultado != null) {
                             result(lista_resultado, index, resultado);
+                        } else if (listaFinal.contains(lista_resultado.get(index - 1) + " " + lista_resultado.get(index) + " " + lista_resultado.get(index + 1))){
+                            int indeX = listaFinal.indexOf(lista_resultado.get(index - 1) + " " + lista_resultado.get(index) + " " + lista_resultado.get(index + 1));
+                            result(lista_resultado, index, String.valueOf((char) ('W' + indeX)));
                         } else {
-                            listaFinal.addFirst(lista_resultado.get(index - 1) + " " + lista_resultado.get(index) + " " + lista_resultado.get(index + 1));
-                            result(lista_resultado, index, "X");
+                            listaFinal.add(lista_resultado.get(index - 1) + " " + lista_resultado.get(index) + " " + lista_resultado.get(index + 1));
+                            result(lista_resultado, index, String.valueOf((char) ('W' + posicao)));
+                            posicao++;
                         }
                     }
                 }
@@ -150,9 +173,13 @@ abstract class MetodosPrincipaisCorrecao extends MetodosBaseCorrecao {
                             String resultado = solveX(listaCheck);
                             if (resultado != null) {
                                 result(lista_resultado, index_noBi, resultado);
+                            } else if (listaFinal.contains(lista_resultado.get(index_noBi - 1) + " " + lista_resultado.get(index_noBi) + " " + lista_resultado.get(index_noBi + 1))){
+                                int index = listaFinal.indexOf(lista_resultado.get(index_noBi - 1) + " " + lista_resultado.get(index_noBi) + " " + lista_resultado.get(index_noBi + 1));
+                                result(lista_resultado, index_noBi, String.valueOf((char) ('W' + index)));
                             } else {
-                                listaFinal.addFirst(lista_resultado.get(index_noBi - 1) + " " + lista_resultado.get(index_noBi) + " " + lista_resultado.get(index_noBi + 1));
-                                result(lista_resultado, index_noBi, "X");
+                                listaFinal.add(lista_resultado.get(index_noBi - 1) + " " + lista_resultado.get(index_noBi) + " " + lista_resultado.get(index_noBi + 1));
+                                result(lista_resultado, index_noBi, String.valueOf((char) ('W' + posicao)));
+                                posicao++;
                             }
                         }
                     }
@@ -175,9 +202,13 @@ abstract class MetodosPrincipaisCorrecao extends MetodosBaseCorrecao {
                             String resultado = solveX(listaCheck);
                             if (resultado != null) {
                                 result(lista_resultado, index_bi, resultado);
+                            } else if (listaFinal.contains(lista_resultado.get(index_bi - 1) + " " + lista_resultado.get(index_bi) + " " + lista_resultado.get(index_bi + 1))){
+                                int index = listaFinal.indexOf(lista_resultado.get(index_bi - 1) + " " + lista_resultado.get(index_bi) + " " + lista_resultado.get(index_bi + 1));
+                                result(lista_resultado, index_bi, String.valueOf((char) ('W' + index)));
                             } else {
-                                listaFinal.addFirst(lista_resultado.get(index_bi - 1) + " " + lista_resultado.get(index_bi) + " " + lista_resultado.get(index_bi + 1));
-                                result(lista_resultado, index_bi, "X");
+                                listaFinal.add(lista_resultado.get(index_bi - 1) + " " + lista_resultado.get(index_bi) + " " + lista_resultado.get(index_bi + 1));
+                                result(lista_resultado, index_bi, String.valueOf((char) ('W' + posicao)));
+                                posicao++;
                             }
                         }
                     }
