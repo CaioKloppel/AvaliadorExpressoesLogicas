@@ -1,6 +1,10 @@
 package correcaoTabelaVerdade;
 
+import util.Funcoes;
+import util.Input;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 
 abstract class MetodosBaseCorrecao {
     static int encontrarFechamento(ArrayList<String> lista, int indiceAbertura) {
@@ -14,6 +18,47 @@ abstract class MetodosBaseCorrecao {
             }
         }
         return -1;
+    }
+
+    static String checkPergunta(String pergunta){
+        ArrayList<String> checker = new ArrayList<>(Arrays.asList(pergunta.trim().split(" ")));
+        System.out.println(checker);
+        int quantidadeConectivos, quantidadeVariaveis, quantidadeParentesesAbertos, quantidadeParentesesFechados;
+        quantidadeVariaveis = 0;
+        for (String item : checker) {
+            if (item.length() == 1 && Character.isLetter(item.charAt(0))) {
+                quantidadeVariaveis++;
+            } else if (item.equals("AND") || item.equals("OR") || item.equals("->") || item.equals("<->")
+                    || item.equals("↑") || item.equals("↓") || item.equals("⊕")) {
+                continue;
+            } else if (item.length() == 1 && (item.charAt(0) == '~' || item.charAt(0) == '(' || item.charAt(0) == ')')) {
+                continue;
+            } else {
+                System.out.println("Insira a questão novamente, ocorreu um erro de digitação, todos os itens devem estar separados por espaços: ");
+                String correcao = Input.getInstance().scanNextLine().toUpperCase();
+                return checkPergunta(correcao);
+            }
+        }
+
+        quantidadeConectivos = Funcoes.quantidade(checker, "AND");
+        quantidadeConectivos += Funcoes.quantidade(checker, "OR");
+        quantidadeConectivos += Funcoes.quantidade(checker, "->");
+        quantidadeConectivos += Funcoes.quantidade(checker, "<->");
+        quantidadeConectivos += Funcoes.quantidade(checker, "↑");
+        quantidadeConectivos += Funcoes.quantidade(checker, "↓");
+        quantidadeConectivos += Funcoes.quantidade(checker, "⊕");
+
+        quantidadeParentesesAbertos = Funcoes.quantidade(checker, "(");
+        quantidadeParentesesFechados = Funcoes.quantidade(checker, ")");
+
+        if (quantidadeConectivos + 1 != quantidadeVariaveis || quantidadeParentesesAbertos != quantidadeParentesesFechados){
+            System.out.println("Insira a questão novamente, ocorreu um erro de digitação: ");
+            String correcao = Input.getInstance().scanNextLine().toUpperCase();
+            correcao = checkPergunta(correcao);
+            return correcao;
+        } else {
+            return pergunta;
+        }
     }
 
     static String solveX(ArrayList<String> lista){

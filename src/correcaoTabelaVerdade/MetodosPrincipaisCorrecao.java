@@ -16,6 +16,7 @@ abstract class MetodosPrincipaisCorrecao extends MetodosBaseCorrecao {
     static public void set_questao(ArrayList<String> questao){
             System.out.println("Insira a questão: ");
             String pergunta = Input.getInstance().scanNextLine().toUpperCase();
+            pergunta = MetodosBaseCorrecao.checkPergunta(pergunta);
             questao.addAll(Arrays.asList(pergunta.split(" ")));
     }
 
