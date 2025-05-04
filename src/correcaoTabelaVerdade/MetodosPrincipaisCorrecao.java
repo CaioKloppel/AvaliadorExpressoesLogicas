@@ -13,14 +13,14 @@ abstract class MetodosPrincipaisCorrecao extends MetodosBaseCorrecao {
     public static ArrayList<String> getListaFinal() { return listaFinal; }
     static private int posicao = 0;
 
-    static public void set_questao(ArrayList<String> questao){
+    static public void setQuestao(ArrayList<String> questao){
             System.out.println("Insira a questão: ");
             String pergunta = Input.getInstance().scanNextLine().toUpperCase();
             pergunta = MetodosBaseCorrecao.checkPergunta(pergunta);
             questao.addAll(Arrays.asList(pergunta.split(" ")));
     }
 
-    static void get_result(ArrayList<String> lista_resultado){
+    static void getResult(ArrayList<String> lista_resultado){
         while (lista_resultado.size() != 1) {
             if (lista_resultado.contains("AND") || lista_resultado.contains("↑")){
                 int index_and = lista_resultado.indexOf("AND");
@@ -218,13 +218,13 @@ abstract class MetodosPrincipaisCorrecao extends MetodosBaseCorrecao {
         }
     }
 
-    static public void resolver_parenteses(ArrayList<String> lista){
+    static public void resolverParenteses(ArrayList<String> lista){
         while (lista.contains("(")){
             int indice_inicial = lista.lastIndexOf("(");
             int indice_final = encontrarFechamento(lista, indice_inicial);
             ArrayList<String> lista_resultado = new ArrayList<>(lista.subList(indice_inicial + 1, indice_final));
 
-            get_result(lista_resultado);
+            getResult(lista_resultado);
 
             for (int i = 0; i < indice_final - indice_inicial + 1; i++){
                 lista.remove(indice_inicial);

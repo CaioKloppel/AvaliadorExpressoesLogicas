@@ -10,7 +10,7 @@ public final class Correcao {
     public void set() {
         questao = new ArrayList<>();
 
-        MetodosPrincipaisCorrecao.set_questao(questao);
+        MetodosPrincipaisCorrecao.setQuestao(questao);
     }
 
     public void corrigirQuantidadeParenteses() {
@@ -32,10 +32,10 @@ public final class Correcao {
 
     public void resolverQuestao() {
         if (questao.contains("(")) {
-            MetodosPrincipaisCorrecao.resolver_parenteses(questao);
+            MetodosPrincipaisCorrecao.resolverParenteses(questao);
         }
 
-        MetodosPrincipaisCorrecao.get_result(questao);
+        MetodosPrincipaisCorrecao.getResult(questao);
     }
 
     public void printResultado() {
