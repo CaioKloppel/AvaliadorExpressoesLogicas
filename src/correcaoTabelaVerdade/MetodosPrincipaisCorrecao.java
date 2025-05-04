@@ -23,192 +23,205 @@ abstract class MetodosPrincipaisCorrecao extends MetodosBaseCorrecao {
     static void getResult(ArrayList<String> lista_resultado){
         while (lista_resultado.size() != 1) {
             if (lista_resultado.contains("AND") || lista_resultado.contains("↑")){
-                int index_and = lista_resultado.indexOf("AND");
-                int index_noAnd = lista_resultado.indexOf("↑");
+                int idxAnd = lista_resultado.indexOf("AND");
+                int idxNand = lista_resultado.indexOf("↑");
 
-                if (index_noAnd != -1 && (index_and == -1 || index_noAnd < index_and)){
-                    if (lista_resultado.get(index_noAnd - 1).equals("V") && lista_resultado.get(index_noAnd + 1).equals("V")){
-                        result(lista_resultado, index_noAnd, "F");
-                    } else if (lista_resultado.get(index_noAnd - 1).equals("F") || lista_resultado.get(index_noAnd + 1).equals("F")){
-                        result(lista_resultado, index_noAnd, "V");
-                    } else if (lista_resultado.get(index_noAnd - 1).equals("V")){
-                        result(lista_resultado, index_noAnd, "~" + lista_resultado.get(index_noAnd + 1));
-                    } else if (lista_resultado.get(index_noAnd + 1).equals("V")){
-                        result(lista_resultado, index_noAnd, "~" + lista_resultado.get(index_noAnd - 1));
+                if (idxNand != -1 && (idxAnd == -1 || idxNand < idxAnd)){
+                    String L = lista_resultado.get(idxNand - 1);
+                    String R = lista_resultado.get(idxNand + 1);
+                    if (L.equals("V") && R.equals("V")){
+                        result(lista_resultado, idxNand, "F");
+                    } else if (L.equals("F") || R.equals("F")){
+                        result(lista_resultado, idxNand, "V");
+                    } else if (L.equals("V")){
+                        result(lista_resultado, idxNand, "~" + R);
+                    } else if (R.equals("V")){
+                        result(lista_resultado, idxNand, "~" + L);
                     } else {
-                        ArrayList<String> listaCheck = new ArrayList<>(Arrays.asList(lista_resultado.get(index_noAnd - 1), lista_resultado.get(index_noAnd), lista_resultado.get(index_noAnd + 1)));
+                        ArrayList<String> listaCheck = new ArrayList<>(Arrays.asList(L, lista_resultado.get(idxNand), R));
                         String resultado = solveX(listaCheck);
                         if (resultado != null){
-                            result(lista_resultado, index_noAnd, resultado);
-                        } else if (listaFinal.contains(lista_resultado.get(index_noAnd - 1) + " " + lista_resultado.get(index_noAnd) + " " + lista_resultado.get(index_noAnd + 1))){
-                            int index = listaFinal.indexOf(lista_resultado.get(index_noAnd - 1) + " " + lista_resultado.get(index_noAnd) + " " + lista_resultado.get(index_noAnd + 1));
-                            result(lista_resultado, index_noAnd, String.valueOf((char) ('W' + index)));
+                            result(lista_resultado, idxNand, resultado);
+                        } else if (listaFinal.contains(L + " " + lista_resultado.get(idxNand) + " " + R)){
+                            int index = listaFinal.indexOf(L + " " + lista_resultado.get(idxNand) + " " + R);
+                            result(lista_resultado, idxNand, String.valueOf((char) ('W' + index)));
                         } else {
-                            listaFinal.add(lista_resultado.get(index_noAnd - 1) + " " + lista_resultado.get(index_noAnd) + " " + lista_resultado.get(index_noAnd + 1));
-                            result(lista_resultado, index_noAnd, String.valueOf((char) ('W' + posicao)));
+                            listaFinal.add(L + " " + lista_resultado.get(idxNand) + " " + R);
+                            result(lista_resultado, idxNand, String.valueOf((char) ('W' + posicao)));
                             posicao++;
                         }
                     }
                 }else{
-                    if (lista_resultado.get(index_and - 1).equals("V") && lista_resultado.get(index_and + 1).equals("V")){
-                        result(lista_resultado, index_and, "V");
-                    } else if (lista_resultado.get(index_and - 1).equals("F") || lista_resultado.get(index_and + 1).equals("F")){
-                        result(lista_resultado, index_and, "F");
-                    } else if (lista_resultado.get(index_and - 1).equals("V")){
-                        result(lista_resultado, index_and, lista_resultado.get(index_and + 1));
-                    } else if (lista_resultado.get(index_and + 1).equals("V")){
-                        result(lista_resultado, index_and, lista_resultado.get(index_and - 1));
+                    String L = lista_resultado.get(idxAnd - 1);
+                    String R = lista_resultado.get(idxAnd + 1);
+                    if (L.equals("V") && R.equals("V")){
+                        result(lista_resultado, idxAnd, "V");
+                    } else if (L.equals("F") || R.equals("F")){
+                        result(lista_resultado, idxAnd, "F");
+                    } else if (L.equals("V")){
+                        result(lista_resultado, idxAnd, R);
+                    } else if (R.equals("V")){
+                        result(lista_resultado, idxAnd, L);
                     } else {
-                        ArrayList<String> listaCheck = new ArrayList<>(Arrays.asList(lista_resultado.get(index_and - 1), lista_resultado.get(index_and), lista_resultado.get(index_and + 1)));
+                        ArrayList<String> listaCheck = new ArrayList<>(Arrays.asList(L, lista_resultado.get(idxAnd), R));
                         String resultado = solveX(listaCheck);
                         if (resultado != null) {
-                            result(lista_resultado, index_and, resultado);
-                        } else if (listaFinal.contains(lista_resultado.get(index_and - 1) + " " + lista_resultado.get(index_and) + " " + lista_resultado.get(index_and + 1))){
-                            int index = listaFinal.indexOf(lista_resultado.get(index_and - 1) + " " + lista_resultado.get(index_and) + " " + lista_resultado.get(index_and + 1));
-                            result(lista_resultado, index_and, String.valueOf((char) ('W' + index)));
+                            result(lista_resultado, idxAnd, resultado);
+                        } else if (listaFinal.contains(L + " " + lista_resultado.get(idxAnd) + " " + R)){
+                            int index = listaFinal.indexOf(L + " " + lista_resultado.get(idxAnd) + " " + R);
+                            result(lista_resultado, idxAnd, String.valueOf((char) ('W' + index)));
                         } else {
-                            listaFinal.add(lista_resultado.get(index_and - 1) + " " + lista_resultado.get(index_and) + " " + lista_resultado.get(index_and + 1));
-                            result(lista_resultado, index_and, String.valueOf((char) ('W' + posicao)));
+                            listaFinal.add(L + " " + lista_resultado.get(idxAnd) + " " + R);
+                            result(lista_resultado, idxAnd, String.valueOf((char) ('W' + posicao)));
                             posicao++;
                         }
                     }
                 }
             }else if (lista_resultado.contains("OR") || lista_resultado.contains("↓")) {
-                int index_or = lista_resultado.indexOf("OR");
-                int index_noOr = lista_resultado.indexOf("↓");
+                int idxOr = lista_resultado.indexOf("OR");
+                int idxNor = lista_resultado.indexOf("↓");
 
-                if (index_noOr != -1 && (index_or == -1 || index_noOr < index_or)){
-                    if (lista_resultado.get(index_noOr - 1).equals("V") || lista_resultado.get(index_noOr + 1).equals("V")){
-                        result(lista_resultado, index_noOr, "F");
-                    } else if (lista_resultado.get(index_noOr - 1).equals("F") && lista_resultado.get(index_noOr + 1).equals("F")){
-                        result(lista_resultado, index_noOr, "V");
-                    } else if (lista_resultado.get(index_noOr - 1).equals("F")){
-                        result(lista_resultado, index_noOr, "~" + lista_resultado.get(index_noOr + 1));
-                    } else if (lista_resultado.get(index_noOr + 1).equals("F")) {
-                        result(lista_resultado, index_noOr, "~" + lista_resultado.get(index_noOr - 1));
+                if (idxNor != -1 && (idxOr == -1 || idxNor < idxOr)){
+                    String L = lista_resultado.get(idxNor - 1);
+                    String R = lista_resultado.get(idxNor + 1);
+                    if (L.equals("V") || R.equals("V")){
+                        result(lista_resultado, idxNor, "F");
+                    } else if (L.equals("F") && R.equals("F")){
+                        result(lista_resultado, idxNor, "V");
+                    } else if (L.equals("F")){
+                        result(lista_resultado, idxNor, "~" + R);
+                    } else if (R.equals("F")) {
+                        result(lista_resultado, idxNor, "~" + L);
                     } else {
-                        ArrayList<String> listaCheck = new ArrayList<>(Arrays.asList(lista_resultado.get(index_noOr - 1), lista_resultado.get(index_noOr), lista_resultado.get(index_noOr + 1)));
+                        ArrayList<String> listaCheck = new ArrayList<>(Arrays.asList(L, lista_resultado.get(idxNor), R));
                         String resultado = solveX(listaCheck);
                         if (resultado != null) {
-                            result(lista_resultado, index_noOr, resultado);
-                        } else if (listaFinal.contains(lista_resultado.get(index_noOr - 1) + " " + lista_resultado.get(index_noOr) + " " + lista_resultado.get(index_noOr + 1))){
-                            int index = listaFinal.indexOf(lista_resultado.get(index_noOr - 1) + " " + lista_resultado.get(index_noOr) + " " + lista_resultado.get(index_noOr + 1));
-                            result(lista_resultado, index_noOr, String.valueOf((char) ('W' + index)));
+                            result(lista_resultado, idxNor, resultado);
+                        } else if (listaFinal.contains(L + " " + lista_resultado.get(idxNor) + " " + R)){
+                            int index = listaFinal.indexOf(L + " " + lista_resultado.get(idxNor) + " " + R);
+                            result(lista_resultado, idxNor, String.valueOf((char) ('W' + index)));
                         } else {
-                            listaFinal.add(lista_resultado.get(index_noOr - 1) + " " + lista_resultado.get(index_noOr) + " " + lista_resultado.get(index_noOr + 1));
-                            result(lista_resultado, index_noOr, String.valueOf((char) ('W' + posicao)));
+                            listaFinal.add(L + " " + lista_resultado.get(idxNor) + " " + R);
+                            result(lista_resultado, idxNor, String.valueOf((char) ('W' + posicao)));
                             posicao++;
                         }
                     }
                 }else{
-                    if (lista_resultado.get(index_or - 1).equals("V") || lista_resultado.get(index_or + 1).equals("V")){
-                        result(lista_resultado, index_or, "V");
-                    } else if (lista_resultado.get(index_or - 1).equals("F") && lista_resultado.get(index_or + 1).equals("F")){
-                        result(lista_resultado, index_or, "F");
-                    } else if (lista_resultado.get(index_or - 1).equals("F")){
-                        result(lista_resultado, index_or, lista_resultado.get(index_or + 1));
-                    } else if (lista_resultado.get(index_or + 1).equals("F")) {
-                        result(lista_resultado, index_or, lista_resultado.get(index_or - 1));
+                    String L = lista_resultado.get(idxOr - 1);
+                    String R = lista_resultado.get(idxOr + 1);
+                    if (L.equals("V") || R.equals("V")){
+                        result(lista_resultado, idxOr, "V");
+                    } else if (L.equals("F") && R.equals("F")){
+                        result(lista_resultado, idxOr, "F");
+                    } else if (L.equals("F")){
+                        result(lista_resultado, idxOr, R);
+                    } else if (R.equals("F")) {
+                        result(lista_resultado, idxOr, L);
                     } else {
-                        ArrayList<String> listaCheck = new ArrayList<>(Arrays.asList(lista_resultado.get(index_or - 1), lista_resultado.get(index_or), lista_resultado.get(index_or + 1)));
+                        ArrayList<String> listaCheck = new ArrayList<>(Arrays.asList(L, lista_resultado.get(idxOr), R));
                         String resultado = solveX(listaCheck);
                         if (resultado != null) {
-                            result(lista_resultado, index_or, resultado);
-                        } else if (listaFinal.contains(lista_resultado.get(index_or - 1) + " " + lista_resultado.get(index_or) + " " + lista_resultado.get(index_or + 1))){
-                            int index = listaFinal.indexOf(lista_resultado.get(index_or - 1) + " " + lista_resultado.get(index_or) + " " + lista_resultado.get(index_or + 1));
-                            result(lista_resultado, index_or, String.valueOf((char) ('W' + index)));
+                            result(lista_resultado, idxOr, resultado);
+                        } else if (listaFinal.contains(L + " " + lista_resultado.get(idxOr) + " " + R)){
+                            int index = listaFinal.indexOf(L + " " + lista_resultado.get(idxOr) + " " + R);
+                            result(lista_resultado, idxOr, String.valueOf((char) ('W' + index)));
                         } else {
-                            listaFinal.add(lista_resultado.get(index_or - 1) + " " + lista_resultado.get(index_or) + " " + lista_resultado.get(index_or + 1));
-                            result(lista_resultado, index_or, String.valueOf((char) ('W' + posicao)));
+                            listaFinal.add(L + " " + lista_resultado.get(idxOr) + " " + R);
+                            result(lista_resultado, idxOr, String.valueOf((char) ('W' + posicao)));
                             posicao++;
                         }
                     }
                 }
             }else if (lista_resultado.contains("->")){
                 int index = lista_resultado.indexOf("->");
-
-                if (lista_resultado.get(index - 1).equals("F") || lista_resultado.get(index + 1).equals("V")){
+                String L = lista_resultado.get(index - 1);
+                String R = lista_resultado.get(index + 1);
+                if (L.equals("F") || R.equals("V")){
                     result(lista_resultado, index, "V");
-                } else if (lista_resultado.get(index - 1).equals("V") && lista_resultado.get(index + 1).equals("F")){
+                } else if (L.equals("V") && R.equals("F")){
                     result(lista_resultado, index, "F");
                 } else {
-                    if (lista_resultado.get(index - 1).equals("V")){
-                        result(lista_resultado, index, lista_resultado.get(index + 1));
-                    } else if (lista_resultado.get(index + 1).equals("F")){
-                        result(lista_resultado, index, "~" + lista_resultado.get(index - 1));
+                    if (L.equals("V")){
+                        result(lista_resultado, index, R);
+                    } else if (R.equals("F")){
+                        result(lista_resultado, index, "~" + L);
                     } else {
-                        ArrayList<String> listaCheck = new ArrayList<>(Arrays.asList(lista_resultado.get(index - 1), lista_resultado.get(index), lista_resultado.get(index + 1)));
+                        ArrayList<String> listaCheck = new ArrayList<>(Arrays.asList(L, lista_resultado.get(index), R));
                         String resultado = solveX(listaCheck);
                         if (resultado != null) {
                             result(lista_resultado, index, resultado);
-                        } else if (listaFinal.contains(lista_resultado.get(index - 1) + " " + lista_resultado.get(index) + " " + lista_resultado.get(index + 1))){
-                            int indeX = listaFinal.indexOf(lista_resultado.get(index - 1) + " " + lista_resultado.get(index) + " " + lista_resultado.get(index + 1));
+                        } else if (listaFinal.contains(L + " " + lista_resultado.get(index) + " " + R)){
+                            int indeX = listaFinal.indexOf(L + " " + lista_resultado.get(index) + " " + R);
                             result(lista_resultado, index, String.valueOf((char) ('W' + indeX)));
                         } else {
-                            listaFinal.add(lista_resultado.get(index - 1) + " " + lista_resultado.get(index) + " " + lista_resultado.get(index + 1));
+                            listaFinal.add(L + " " + lista_resultado.get(index) + " " + R);
                             result(lista_resultado, index, String.valueOf((char) ('W' + posicao)));
                             posicao++;
                         }
                     }
                 }
             }else if (lista_resultado.contains("<->") || lista_resultado.contains("⊕")){
-                int index_bi = lista_resultado.indexOf("<->");
-                int index_noBi = lista_resultado.indexOf("⊕");
+                int idxBi = lista_resultado.indexOf("<->");
+                int idxNobi = lista_resultado.indexOf("⊕");
 
-                if (index_noBi != -1 && (index_bi == -1 || index_noBi < index_bi)){
-                    if (lista_resultado.get(index_noBi - 1).equals(lista_resultado.get(index_noBi + 1))){
-                        result(lista_resultado, index_noBi, "F");
+                if (idxNobi != -1 && (idxBi == -1 || idxNobi < idxBi)){
+                    String L = lista_resultado.get(idxNobi - 1);
+                    String R = lista_resultado.get(idxNobi + 1);
+                    if (L.equals(R)){
+                        result(lista_resultado, idxNobi, "F");
                     } else {
-                        if (((lista_resultado.get(index_noBi - 1).equals("V")) && (lista_resultado.get(index_noBi + 1).equals("F"))) || ((lista_resultado.get(index_noBi - 1).equals("F")) && (lista_resultado.get(index_noBi + 1).equals("V")))){
-                            result(lista_resultado, index_noBi, "V");
-                        } else if (lista_resultado.get(index_noBi - 1).equals("V")){
-                            result(lista_resultado, index_noBi, "~" + lista_resultado.get(index_noBi + 1));
-                        } else if (lista_resultado.get(index_noBi - 1).equals("F")){
-                            result(lista_resultado, index_noBi, lista_resultado.get(index_noBi + 1));
-                        } else if (lista_resultado.get(index_noBi + 1).equals("V")){
-                            result(lista_resultado, index_noBi, "~" + lista_resultado.get(index_noBi - 1));
-                        } else if (lista_resultado.get(index_noBi + 1).equals("F")){
-                            result(lista_resultado, index_noBi, lista_resultado.get(index_noBi - 1));
+                        if (((L.equals("V")) && (R.equals("F"))) || ((L.equals("F")) && (R.equals("V")))){
+                            result(lista_resultado, idxNobi, "V");
+                        } else if (L.equals("V")){
+                            result(lista_resultado, idxNobi, "~" + R);
+                        } else if (L.equals("F")){
+                            result(lista_resultado, idxNobi, R);
+                        } else if (R.equals("V")){
+                            result(lista_resultado, idxNobi, "~" + L);
+                        } else if (R.equals("F")){
+                            result(lista_resultado, idxNobi, L);
                         } else {
-                            ArrayList<String> listaCheck = new ArrayList<>(Arrays.asList(lista_resultado.get(index_noBi - 1), lista_resultado.get(index_noBi), lista_resultado.get(index_noBi + 1)));
+                            ArrayList<String> listaCheck = new ArrayList<>(Arrays.asList(L, lista_resultado.get(idxNobi), R));
                             String resultado = solveX(listaCheck);
                             if (resultado != null) {
-                                result(lista_resultado, index_noBi, resultado);
-                            } else if (listaFinal.contains(lista_resultado.get(index_noBi - 1) + " " + lista_resultado.get(index_noBi) + " " + lista_resultado.get(index_noBi + 1))){
-                                int index = listaFinal.indexOf(lista_resultado.get(index_noBi - 1) + " " + lista_resultado.get(index_noBi) + " " + lista_resultado.get(index_noBi + 1));
-                                result(lista_resultado, index_noBi, String.valueOf((char) ('W' + index)));
+                                result(lista_resultado, idxNobi, resultado);
+                            } else if (listaFinal.contains(L + " " + lista_resultado.get(idxNobi) + " " + R)){
+                                int index = listaFinal.indexOf(L + " " + lista_resultado.get(idxNobi) + " " + R);
+                                result(lista_resultado, idxNobi, String.valueOf((char) ('W' + index)));
                             } else {
-                                listaFinal.add(lista_resultado.get(index_noBi - 1) + " " + lista_resultado.get(index_noBi) + " " + lista_resultado.get(index_noBi + 1));
-                                result(lista_resultado, index_noBi, String.valueOf((char) ('W' + posicao)));
+                                listaFinal.add(L + " " + lista_resultado.get(idxNobi) + " " + R);
+                                result(lista_resultado, idxNobi, String.valueOf((char) ('W' + posicao)));
                                 posicao++;
                             }
                         }
                     }
                 }else{
-                    if (lista_resultado.get(index_bi - 1).equals(lista_resultado.get(index_bi + 1))){
-                        result(lista_resultado, index_bi, "V");
+                    String L = lista_resultado.get(idxBi - 1);
+                    String R = lista_resultado.get(idxBi + 1);
+                    if (L.equals(R)){
+                        result(lista_resultado, idxBi, "V");
                     } else {
-                        if (((lista_resultado.get(index_bi - 1).equals("V")) && (lista_resultado.get(index_bi + 1).equals("F"))) || ((lista_resultado.get(index_bi - 1).equals("F")) && (lista_resultado.get(index_bi + 1).equals("V")))){
-                            result(lista_resultado, index_bi, "F");
-                        } else if (lista_resultado.get(index_bi - 1).equals("V")){
-                            result(lista_resultado, index_bi, lista_resultado.get(index_bi + 1));
-                        } else if (lista_resultado.get(index_bi - 1).equals("F")){
-                            result(lista_resultado, index_bi, "~" + lista_resultado.get(index_bi + 1));
-                        } else if (lista_resultado.get(index_bi + 1).equals("V")){
-                            result(lista_resultado, index_bi, lista_resultado.get(index_bi - 1));
-                        } else if (lista_resultado.get(index_bi + 1).equals("F")){
-                            result(lista_resultado, index_bi, "~" + lista_resultado.get(index_bi - 1));
+                        if (((L.equals("V")) && (R.equals("F"))) || ((L.equals("F")) && (R.equals("V")))){
+                            result(lista_resultado, idxBi, "F");
+                        } else if (L.equals("V")){
+                            result(lista_resultado, idxBi, R);
+                        } else if (L.equals("F")){
+                            result(lista_resultado, idxBi, "~" + R);
+                        } else if (R.equals("V")){
+                            result(lista_resultado, idxBi, L);
+                        } else if (R.equals("F")){
+                            result(lista_resultado, idxBi, "~" + L);
                         } else {
-                            ArrayList<String> listaCheck = new ArrayList<>(Arrays.asList(lista_resultado.get(index_bi - 1), lista_resultado.get(index_bi), lista_resultado.get(index_bi + 1)));
+                            ArrayList<String> listaCheck = new ArrayList<>(Arrays.asList(L, lista_resultado.get(idxBi), R));
                             String resultado = solveX(listaCheck);
                             if (resultado != null) {
-                                result(lista_resultado, index_bi, resultado);
-                            } else if (listaFinal.contains(lista_resultado.get(index_bi - 1) + " " + lista_resultado.get(index_bi) + " " + lista_resultado.get(index_bi + 1))){
-                                int index = listaFinal.indexOf(lista_resultado.get(index_bi - 1) + " " + lista_resultado.get(index_bi) + " " + lista_resultado.get(index_bi + 1));
-                                result(lista_resultado, index_bi, String.valueOf((char) ('W' + index)));
+                                result(lista_resultado, idxBi, resultado);
+                            } else if (listaFinal.contains(L + " " + lista_resultado.get(idxBi) + " " + R)){
+                                int index = listaFinal.indexOf(L + " " + lista_resultado.get(idxBi) + " " + R);
+                                result(lista_resultado, idxBi, String.valueOf((char) ('W' + index)));
                             } else {
-                                listaFinal.add(lista_resultado.get(index_bi - 1) + " " + lista_resultado.get(index_bi) + " " + lista_resultado.get(index_bi + 1));
-                                result(lista_resultado, index_bi, String.valueOf((char) ('W' + posicao)));
+                                listaFinal.add(L + " " + lista_resultado.get(idxBi) + " " + R);
+                                result(lista_resultado, idxBi, String.valueOf((char) ('W' + posicao)));
                                 posicao++;
                             }
                         }
