@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
-abstract class MetodosPrincipaisCorrecao extends MetodosBaseCorrecao {
+abstract class MetodosPrincipaisCorrecao {
 
     private static final ArrayList<String> listaFinal = new ArrayList<>();
 
@@ -30,24 +30,24 @@ abstract class MetodosPrincipaisCorrecao extends MetodosBaseCorrecao {
                     String L = lista_resultado.get(idxNand - 1);
                     String R = lista_resultado.get(idxNand + 1);
                     if (L.equals("V") && R.equals("V")){
-                        result(lista_resultado, idxNand, "F");
+                        MetodosBaseCorrecao.result(lista_resultado, idxNand, "F");
                     } else if (L.equals("F") || R.equals("F")){
-                        result(lista_resultado, idxNand, "V");
+                        MetodosBaseCorrecao.result(lista_resultado, idxNand, "V");
                     } else if (L.equals("V")){
-                        result(lista_resultado, idxNand, "~" + R);
+                        MetodosBaseCorrecao.result(lista_resultado, idxNand, "~" + R);
                     } else if (R.equals("V")){
-                        result(lista_resultado, idxNand, "~" + L);
+                        MetodosBaseCorrecao.result(lista_resultado, idxNand, "~" + L);
                     } else {
                         ArrayList<String> listaCheck = new ArrayList<>(Arrays.asList(L, lista_resultado.get(idxNand), R));
-                        String resultado = solveX(listaCheck);
+                        String resultado = MetodosBaseCorrecao.solveX(listaCheck);
                         if (resultado != null){
-                            result(lista_resultado, idxNand, resultado);
+                            MetodosBaseCorrecao.result(lista_resultado, idxNand, resultado);
                         } else if (listaFinal.contains(L + " " + lista_resultado.get(idxNand) + " " + R)){
                             int index = listaFinal.indexOf(L + " " + lista_resultado.get(idxNand) + " " + R);
-                            result(lista_resultado, idxNand, String.valueOf((char) ('W' + index)));
+                            MetodosBaseCorrecao.result(lista_resultado, idxNand, String.valueOf((char) ('W' + index)));
                         } else {
                             listaFinal.add(L + " " + lista_resultado.get(idxNand) + " " + R);
-                            result(lista_resultado, idxNand, String.valueOf((char) ('W' + posicao)));
+                            MetodosBaseCorrecao.result(lista_resultado, idxNand, String.valueOf((char) ('W' + posicao)));
                             posicao++;
                         }
                     }
@@ -55,24 +55,24 @@ abstract class MetodosPrincipaisCorrecao extends MetodosBaseCorrecao {
                     String L = lista_resultado.get(idxAnd - 1);
                     String R = lista_resultado.get(idxAnd + 1);
                     if (L.equals("V") && R.equals("V")){
-                        result(lista_resultado, idxAnd, "V");
+                        MetodosBaseCorrecao.result(lista_resultado, idxAnd, "V");
                     } else if (L.equals("F") || R.equals("F")){
-                        result(lista_resultado, idxAnd, "F");
+                        MetodosBaseCorrecao.result(lista_resultado, idxAnd, "F");
                     } else if (L.equals("V")){
-                        result(lista_resultado, idxAnd, R);
+                        MetodosBaseCorrecao.result(lista_resultado, idxAnd, R);
                     } else if (R.equals("V")){
-                        result(lista_resultado, idxAnd, L);
+                        MetodosBaseCorrecao.result(lista_resultado, idxAnd, L);
                     } else {
                         ArrayList<String> listaCheck = new ArrayList<>(Arrays.asList(L, lista_resultado.get(idxAnd), R));
-                        String resultado = solveX(listaCheck);
+                        String resultado = MetodosBaseCorrecao.solveX(listaCheck);
                         if (resultado != null) {
-                            result(lista_resultado, idxAnd, resultado);
+                            MetodosBaseCorrecao.result(lista_resultado, idxAnd, resultado);
                         } else if (listaFinal.contains(L + " " + lista_resultado.get(idxAnd) + " " + R)){
                             int index = listaFinal.indexOf(L + " " + lista_resultado.get(idxAnd) + " " + R);
-                            result(lista_resultado, idxAnd, String.valueOf((char) ('W' + index)));
+                            MetodosBaseCorrecao.result(lista_resultado, idxAnd, String.valueOf((char) ('W' + index)));
                         } else {
                             listaFinal.add(L + " " + lista_resultado.get(idxAnd) + " " + R);
-                            result(lista_resultado, idxAnd, String.valueOf((char) ('W' + posicao)));
+                            MetodosBaseCorrecao.result(lista_resultado, idxAnd, String.valueOf((char) ('W' + posicao)));
                             posicao++;
                         }
                     }
@@ -85,24 +85,24 @@ abstract class MetodosPrincipaisCorrecao extends MetodosBaseCorrecao {
                     String L = lista_resultado.get(idxNor - 1);
                     String R = lista_resultado.get(idxNor + 1);
                     if (L.equals("V") || R.equals("V")){
-                        result(lista_resultado, idxNor, "F");
+                        MetodosBaseCorrecao.result(lista_resultado, idxNor, "F");
                     } else if (L.equals("F") && R.equals("F")){
-                        result(lista_resultado, idxNor, "V");
+                        MetodosBaseCorrecao.result(lista_resultado, idxNor, "V");
                     } else if (L.equals("F")){
-                        result(lista_resultado, idxNor, "~" + R);
+                        MetodosBaseCorrecao.result(lista_resultado, idxNor, "~" + R);
                     } else if (R.equals("F")) {
-                        result(lista_resultado, idxNor, "~" + L);
+                        MetodosBaseCorrecao.result(lista_resultado, idxNor, "~" + L);
                     } else {
                         ArrayList<String> listaCheck = new ArrayList<>(Arrays.asList(L, lista_resultado.get(idxNor), R));
-                        String resultado = solveX(listaCheck);
+                        String resultado = MetodosBaseCorrecao.solveX(listaCheck);
                         if (resultado != null) {
-                            result(lista_resultado, idxNor, resultado);
+                            MetodosBaseCorrecao.result(lista_resultado, idxNor, resultado);
                         } else if (listaFinal.contains(L + " " + lista_resultado.get(idxNor) + " " + R)){
                             int index = listaFinal.indexOf(L + " " + lista_resultado.get(idxNor) + " " + R);
-                            result(lista_resultado, idxNor, String.valueOf((char) ('W' + index)));
+                            MetodosBaseCorrecao.result(lista_resultado, idxNor, String.valueOf((char) ('W' + index)));
                         } else {
                             listaFinal.add(L + " " + lista_resultado.get(idxNor) + " " + R);
-                            result(lista_resultado, idxNor, String.valueOf((char) ('W' + posicao)));
+                            MetodosBaseCorrecao.result(lista_resultado, idxNor, String.valueOf((char) ('W' + posicao)));
                             posicao++;
                         }
                     }
@@ -110,24 +110,24 @@ abstract class MetodosPrincipaisCorrecao extends MetodosBaseCorrecao {
                     String L = lista_resultado.get(idxOr - 1);
                     String R = lista_resultado.get(idxOr + 1);
                     if (L.equals("V") || R.equals("V")){
-                        result(lista_resultado, idxOr, "V");
+                        MetodosBaseCorrecao.result(lista_resultado, idxOr, "V");
                     } else if (L.equals("F") && R.equals("F")){
-                        result(lista_resultado, idxOr, "F");
+                        MetodosBaseCorrecao.result(lista_resultado, idxOr, "F");
                     } else if (L.equals("F")){
-                        result(lista_resultado, idxOr, R);
+                        MetodosBaseCorrecao.result(lista_resultado, idxOr, R);
                     } else if (R.equals("F")) {
-                        result(lista_resultado, idxOr, L);
+                        MetodosBaseCorrecao.result(lista_resultado, idxOr, L);
                     } else {
                         ArrayList<String> listaCheck = new ArrayList<>(Arrays.asList(L, lista_resultado.get(idxOr), R));
-                        String resultado = solveX(listaCheck);
+                        String resultado = MetodosBaseCorrecao.solveX(listaCheck);
                         if (resultado != null) {
-                            result(lista_resultado, idxOr, resultado);
+                            MetodosBaseCorrecao.result(lista_resultado, idxOr, resultado);
                         } else if (listaFinal.contains(L + " " + lista_resultado.get(idxOr) + " " + R)){
                             int index = listaFinal.indexOf(L + " " + lista_resultado.get(idxOr) + " " + R);
-                            result(lista_resultado, idxOr, String.valueOf((char) ('W' + index)));
+                            MetodosBaseCorrecao.result(lista_resultado, idxOr, String.valueOf((char) ('W' + index)));
                         } else {
                             listaFinal.add(L + " " + lista_resultado.get(idxOr) + " " + R);
-                            result(lista_resultado, idxOr, String.valueOf((char) ('W' + posicao)));
+                            MetodosBaseCorrecao.result(lista_resultado, idxOr, String.valueOf((char) ('W' + posicao)));
                             posicao++;
                         }
                     }
@@ -137,25 +137,25 @@ abstract class MetodosPrincipaisCorrecao extends MetodosBaseCorrecao {
                 String L = lista_resultado.get(index - 1);
                 String R = lista_resultado.get(index + 1);
                 if (L.equals("F") || R.equals("V")){
-                    result(lista_resultado, index, "V");
+                    MetodosBaseCorrecao.result(lista_resultado, index, "V");
                 } else if (L.equals("V") && R.equals("F")){
-                    result(lista_resultado, index, "F");
+                    MetodosBaseCorrecao.result(lista_resultado, index, "F");
                 } else {
                     if (L.equals("V")){
-                        result(lista_resultado, index, R);
+                        MetodosBaseCorrecao.result(lista_resultado, index, R);
                     } else if (R.equals("F")){
-                        result(lista_resultado, index, "~" + L);
+                        MetodosBaseCorrecao.result(lista_resultado, index, "~" + L);
                     } else {
                         ArrayList<String> listaCheck = new ArrayList<>(Arrays.asList(L, lista_resultado.get(index), R));
-                        String resultado = solveX(listaCheck);
+                        String resultado = MetodosBaseCorrecao.solveX(listaCheck);
                         if (resultado != null) {
-                            result(lista_resultado, index, resultado);
+                            MetodosBaseCorrecao.result(lista_resultado, index, resultado);
                         } else if (listaFinal.contains(L + " " + lista_resultado.get(index) + " " + R)){
                             int indeX = listaFinal.indexOf(L + " " + lista_resultado.get(index) + " " + R);
-                            result(lista_resultado, index, String.valueOf((char) ('W' + indeX)));
+                            MetodosBaseCorrecao.result(lista_resultado, index, String.valueOf((char) ('W' + indeX)));
                         } else {
                             listaFinal.add(L + " " + lista_resultado.get(index) + " " + R);
-                            result(lista_resultado, index, String.valueOf((char) ('W' + posicao)));
+                            MetodosBaseCorrecao.result(lista_resultado, index, String.valueOf((char) ('W' + posicao)));
                             posicao++;
                         }
                     }
@@ -168,29 +168,29 @@ abstract class MetodosPrincipaisCorrecao extends MetodosBaseCorrecao {
                     String L = lista_resultado.get(idxNobi - 1);
                     String R = lista_resultado.get(idxNobi + 1);
                     if (L.equals(R)){
-                        result(lista_resultado, idxNobi, "F");
+                        MetodosBaseCorrecao.result(lista_resultado, idxNobi, "F");
                     } else {
                         if (((L.equals("V")) && (R.equals("F"))) || ((L.equals("F")) && (R.equals("V")))){
-                            result(lista_resultado, idxNobi, "V");
+                            MetodosBaseCorrecao.result(lista_resultado, idxNobi, "V");
                         } else if (L.equals("V")){
-                            result(lista_resultado, idxNobi, "~" + R);
+                            MetodosBaseCorrecao.result(lista_resultado, idxNobi, "~" + R);
                         } else if (L.equals("F")){
-                            result(lista_resultado, idxNobi, R);
+                            MetodosBaseCorrecao.result(lista_resultado, idxNobi, R);
                         } else if (R.equals("V")){
-                            result(lista_resultado, idxNobi, "~" + L);
+                            MetodosBaseCorrecao.result(lista_resultado, idxNobi, "~" + L);
                         } else if (R.equals("F")){
-                            result(lista_resultado, idxNobi, L);
+                            MetodosBaseCorrecao.result(lista_resultado, idxNobi, L);
                         } else {
                             ArrayList<String> listaCheck = new ArrayList<>(Arrays.asList(L, lista_resultado.get(idxNobi), R));
-                            String resultado = solveX(listaCheck);
+                            String resultado = MetodosBaseCorrecao.solveX(listaCheck);
                             if (resultado != null) {
-                                result(lista_resultado, idxNobi, resultado);
+                                MetodosBaseCorrecao.result(lista_resultado, idxNobi, resultado);
                             } else if (listaFinal.contains(L + " " + lista_resultado.get(idxNobi) + " " + R)){
                                 int index = listaFinal.indexOf(L + " " + lista_resultado.get(idxNobi) + " " + R);
-                                result(lista_resultado, idxNobi, String.valueOf((char) ('W' + index)));
+                                MetodosBaseCorrecao.result(lista_resultado, idxNobi, String.valueOf((char) ('W' + index)));
                             } else {
                                 listaFinal.add(L + " " + lista_resultado.get(idxNobi) + " " + R);
-                                result(lista_resultado, idxNobi, String.valueOf((char) ('W' + posicao)));
+                                MetodosBaseCorrecao.result(lista_resultado, idxNobi, String.valueOf((char) ('W' + posicao)));
                                 posicao++;
                             }
                         }
@@ -199,29 +199,29 @@ abstract class MetodosPrincipaisCorrecao extends MetodosBaseCorrecao {
                     String L = lista_resultado.get(idxBi - 1);
                     String R = lista_resultado.get(idxBi + 1);
                     if (L.equals(R)){
-                        result(lista_resultado, idxBi, "V");
+                        MetodosBaseCorrecao.result(lista_resultado, idxBi, "V");
                     } else {
                         if (((L.equals("V")) && (R.equals("F"))) || ((L.equals("F")) && (R.equals("V")))){
-                            result(lista_resultado, idxBi, "F");
+                            MetodosBaseCorrecao.result(lista_resultado, idxBi, "F");
                         } else if (L.equals("V")){
-                            result(lista_resultado, idxBi, R);
+                            MetodosBaseCorrecao.result(lista_resultado, idxBi, R);
                         } else if (L.equals("F")){
-                            result(lista_resultado, idxBi, "~" + R);
+                            MetodosBaseCorrecao.result(lista_resultado, idxBi, "~" + R);
                         } else if (R.equals("V")){
-                            result(lista_resultado, idxBi, L);
+                            MetodosBaseCorrecao.result(lista_resultado, idxBi, L);
                         } else if (R.equals("F")){
-                            result(lista_resultado, idxBi, "~" + L);
+                            MetodosBaseCorrecao.result(lista_resultado, idxBi, "~" + L);
                         } else {
                             ArrayList<String> listaCheck = new ArrayList<>(Arrays.asList(L, lista_resultado.get(idxBi), R));
-                            String resultado = solveX(listaCheck);
+                            String resultado = MetodosBaseCorrecao.solveX(listaCheck);
                             if (resultado != null) {
-                                result(lista_resultado, idxBi, resultado);
+                                MetodosBaseCorrecao.result(lista_resultado, idxBi, resultado);
                             } else if (listaFinal.contains(L + " " + lista_resultado.get(idxBi) + " " + R)){
                                 int index = listaFinal.indexOf(L + " " + lista_resultado.get(idxBi) + " " + R);
-                                result(lista_resultado, idxBi, String.valueOf((char) ('W' + index)));
+                                MetodosBaseCorrecao.result(lista_resultado, idxBi, String.valueOf((char) ('W' + index)));
                             } else {
                                 listaFinal.add(L + " " + lista_resultado.get(idxBi) + " " + R);
-                                result(lista_resultado, idxBi, String.valueOf((char) ('W' + posicao)));
+                                MetodosBaseCorrecao.result(lista_resultado, idxBi, String.valueOf((char) ('W' + posicao)));
                                 posicao++;
                             }
                         }
@@ -234,7 +234,7 @@ abstract class MetodosPrincipaisCorrecao extends MetodosBaseCorrecao {
     static public void resolverParenteses(ArrayList<String> lista){
         while (lista.contains("(")){
             int indice_inicial = lista.lastIndexOf("(");
-            int indice_final = encontrarFechamento(lista, indice_inicial);
+            int indice_final = MetodosBaseCorrecao.encontrarFechamento(lista, indice_inicial);
             ArrayList<String> lista_resultado = new ArrayList<>(lista.subList(indice_inicial + 1, indice_final));
 
             getResult(lista_resultado);
