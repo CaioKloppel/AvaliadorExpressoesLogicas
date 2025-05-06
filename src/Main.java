@@ -3,6 +3,7 @@ import util.Input;
 
 public class Main {
     public static void main(String[] args) {
+
         Correcao correcao = new Correcao();
         correcao.set();
         correcao.corrigirQuantidadeParenteses();
@@ -10,5 +11,6 @@ public class Main {
         correcao.resolverQuestao();
         correcao.printResultado();
         Input.getInstance().closeScan();
+        
     }
 }
