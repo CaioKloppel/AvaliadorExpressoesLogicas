@@ -48,11 +48,12 @@ public final class Correcao {
         }
         if (!(questao.getFirst().equals("V") || questao.getFirst().equals("~V") || questao.getFirst().equals("F") || questao.getFirst().equals("~F"))) {
             for (int i = 0; i < MetodosPrincipaisCorrecao.getListaFinal().size(); i++) {
-                if (MetodosPrincipaisCorrecao.getListaFinal().get(i).chars().filter(c -> c == '~').count() % 2 == 0) {
-                    System.out.println(((char) ('W' + i)) + " = " + MetodosPrincipaisCorrecao.getListaFinal().get(i).replace("~", ""));
-                } else {
-                    System.out.println(((char) ('W' + i)) + " = " + "~" + MetodosPrincipaisCorrecao.getListaFinal().get(i).replace("~", ""));
+                String expr = MetodosPrincipaisCorrecao.getListaFinal().get(i);
+                while (expr.contains("~~")) {
+                    expr = expr.replace("~~", "");
                 }
+                char var = (char) ('W' + i);
+                System.out.println(var + " = " + expr);
             }
         }
     }
