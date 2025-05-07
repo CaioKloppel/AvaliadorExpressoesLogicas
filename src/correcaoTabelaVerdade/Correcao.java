@@ -30,13 +30,13 @@ public final class Correcao {
 
     public void resolverQuestao() {
 
-        MetodosPrincipaisCorrecao.tratarAbsorcao(questao);
+        MetodosPrincipaisCorrecao.prepareQuestao(questao);
 
         if (questao.contains("(")) {
             MetodosPrincipaisCorrecao.resolverParenteses(questao);
         }
 
-        MetodosPrincipaisCorrecao.tratarAbsorcao(questao);
+        MetodosPrincipaisCorrecao.prepareQuestao(questao);
 
         MetodosPrincipaisCorrecao.getResult(questao);
     }

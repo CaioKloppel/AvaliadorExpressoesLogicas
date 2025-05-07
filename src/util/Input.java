@@ -6,8 +6,7 @@ public final class Input {
     private volatile static Scanner scanner;
     private volatile static Input input;
 
-    private Input() {
-    }
+    private Input() {}
 
     public static Input getInstance() {
         if (input == null) {
