@@ -18,11 +18,9 @@ public final class Correcao {
         qntdAbertura = Funcoes.quantidade(questao, "(");
         qntdFechamento = Funcoes.quantidade(questao, ")");
 
-        if (qntdAbertura > qntdFechamento) {
-            while (qntdAbertura > qntdFechamento) {
-                questao.add(")");
-                qntdFechamento = Funcoes.quantidade(questao, ")");
-            }
+        while (qntdAbertura > qntdFechamento) {
+            questao.add(")");
+            qntdFechamento = Funcoes.quantidade(questao, ")");
         }
     }
 
@@ -31,9 +29,14 @@ public final class Correcao {
     }
 
     public void resolverQuestao() {
+
+        MetodosPrincipaisCorrecao.tratarAbsorcao(questao);
+
         if (questao.contains("(")) {
             MetodosPrincipaisCorrecao.resolverParenteses(questao);
         }
+
+        MetodosPrincipaisCorrecao.tratarAbsorcao(questao);
 
         MetodosPrincipaisCorrecao.getResult(questao);
     }

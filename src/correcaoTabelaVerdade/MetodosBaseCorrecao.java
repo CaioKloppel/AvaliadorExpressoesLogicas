@@ -1,16 +1,23 @@
 package correcaoTabelaVerdade;
 
+import tabelaVerdade.Tabela;
 import util.Funcoes;
 import util.Input;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 
 abstract class MetodosBaseCorrecao {
+    private static final Tabela tabela = new Tabela();
     static int encontrarFechamento(ArrayList<String> lista, int indiceAbertura) {
         int contador = 1;
         for (int i = indiceAbertura + 1; i < lista.size(); i++) {
-            if (lista.get(i).equals(")")) {
+            String token = lista.get(i);
+            if (token.equals("(")) {
+                contador++;
+            } else if (token.equals(")")) {
                 contador--;
             }
             if (contador == 0) {
@@ -20,6 +27,19 @@ abstract class MetodosBaseCorrecao {
         return -1;
     }
 
+    static HashSet<String> topLevelOps(List<String> tokens) {
+        HashSet<String> ops = new java.util.HashSet<>();
+        int depth = 0;
+        for (String t : tokens) {
+            if (t.equals("("))       depth++;
+            else if (t.equals(")"))  depth--;
+            else if (depth == 0 && (t.equals("AND") || t.equals("OR")))
+                ops.add(t);
+        }
+        return ops;
+    }
+
+
     static String checkPergunta(String pergunta){
         ArrayList<String> checker = new ArrayList<>(Arrays.asList(pergunta.trim().split(" ")));
         int quantidadeConectivos, quantidadeVariaveis, quantidadeParentesesAbertos, quantidadeParentesesFechados;
@@ -27,12 +47,9 @@ abstract class MetodosBaseCorrecao {
         for (String item : checker) {
             if (item.length() == 1 && Character.isLetter(item.charAt(0))) {
                 quantidadeVariaveis++;
-            } else if (item.equals("AND") || item.equals("OR") || item.equals("->") || item.equals("<->")
-                    || item.equals("↑") || item.equals("↓") || item.equals("⊕")) {
-                continue;
-            } else if (item.length() == 1 && (item.charAt(0) == '~' || item.charAt(0) == '(' || item.charAt(0) == ')')) {
-                continue;
-            } else {
+            }else if (tabela.getConectivos().contains(item)) {}
+             else if (item.length() == 1 && (item.charAt(0) == '~' || item.charAt(0) == '(' || item.charAt(0) == ')')){}
+             else {
                 System.out.println("Insira a questão novamente, ocorreu um erro de digitação, todos os itens devem estar separados por espaços: ");
                 String correcao = Input.getInstance().scanNextLine().toUpperCase();
                 return checkPergunta(correcao);

@@ -4,6 +4,7 @@ import util.Input;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 
 
 abstract class MetodosPrincipaisCorrecao {
@@ -18,6 +19,138 @@ abstract class MetodosPrincipaisCorrecao {
             String pergunta = Input.getInstance().scanNextLine().toUpperCase();
             pergunta = MetodosBaseCorrecao.checkPergunta(pergunta);
             questao.addAll(Arrays.asList(pergunta.split(" ")));
+    }
+
+    static public void tratarAbsorcao(ArrayList<String> lista) {
+
+        boolean mudou;
+        do {
+            mudou = false;
+
+            for (int i = 0; i + 2 < lista.size(); i++) {
+
+                String A = lista.get(i);
+                String opExt = lista.get(i + 1);
+                if (!(opExt.equals("AND") || opExt.equals("OR"))) continue;
+                if (!lista.get(i + 2).equals("(")) continue;
+
+                int abre  = i + 2;
+                int fecha = MetodosBaseCorrecao.encontrarFechamento(lista, abre);
+                if (fecha == -1) continue;
+
+                ArrayList<String> dentro = new ArrayList<>(lista.subList(abre + 1, fecha));
+                if (!dentro.contains(A)) continue;
+
+                HashSet<String> opsInside = MetodosBaseCorrecao.topLevelOps(dentro);
+
+
+                if ((opExt.equals("OR")  && opsInside.size() == 1 && opsInside.contains("AND")) || (opExt.equals("AND") && opsInside.size() == 1 && opsInside.contains("OR"))) {
+                    lista.subList(i, fecha + 1).clear();
+                    lista.add(i, A);
+                    mudou = true;
+                    break;
+                }
+
+
+                if ((opExt.equals("AND") && opsInside.size() == 1 && opsInside.contains("AND")) ||
+                        (opExt.equals("OR")  && opsInside.size() == 1 && opsInside.contains("OR"))) {
+
+
+                    dentro.removeIf(tok -> tok.equals(A));
+
+
+                    while (!dentro.isEmpty() && dentro.getFirst().equals(opExt)) dentro.removeFirst();
+                    while (!dentro.isEmpty() && dentro.getLast().equals(opExt)) dentro.removeLast();
+                    for (int j = 1; j < dentro.size(); ) {
+                        if (dentro.get(j).equals(opExt) && dentro.get(j - 1).equals(opExt))
+                            dentro.remove(j);
+                        else
+                            j++;
+                    }
+
+                    lista.subList(i, fecha + 1).clear();
+
+                    if (dentro.isEmpty()) {
+                        lista.add(i, A);
+                    } else {
+                        lista.add(i, A);
+                        lista.add(i + 1, opExt);
+                        if (dentro.size() == 1) {
+                            lista.add(i + 2, dentro.getFirst());
+                        } else {
+                            lista.add(i + 2, "(");
+                            lista.addAll(i + 3, dentro);
+                            lista.add(i + 3 + dentro.size(), ")");
+                        }
+                    }
+                    mudou = true;
+                    break;
+                }
+            }
+
+            if (mudou) continue;
+
+            for (int abre = 0; abre < lista.size(); abre++) {
+
+                if (!lista.get(abre).equals("(")) continue;
+                int fecha = MetodosBaseCorrecao.encontrarFechamento(lista, abre);
+                if (fecha == -1 || fecha + 2 >= lista.size()) continue;
+
+                String opExt = lista.get(fecha + 1);
+                if (!(opExt.equals("AND") || opExt.equals("OR"))) continue;
+                String A = lista.get(fecha + 2);
+
+                ArrayList<String> dentro = new ArrayList<>(lista.subList(abre + 1, fecha));
+                if (!dentro.contains(A)) continue;
+
+                HashSet<String> opsInside = MetodosBaseCorrecao.topLevelOps(dentro);
+
+                if ((opExt.equals("OR")  && opsInside.size() == 1 && opsInside.contains("AND")) ||
+                        (opExt.equals("AND") && opsInside.size() == 1 && opsInside.contains("OR"))) {
+
+                    lista.subList(abre, fecha + 3).clear();
+                    lista.add(abre, A);
+                    mudou = true;
+                    break;
+                }
+
+                if ((opExt.equals("AND") && opsInside.size() == 1 && opsInside.contains("AND")) ||
+                        (opExt.equals("OR")  && opsInside.size() == 1 && opsInside.contains("OR"))) {
+
+                    dentro.removeIf(tok -> tok.equals(A));
+
+                    while (!dentro.isEmpty() && dentro.getFirst().equals(opExt))
+                        dentro.removeFirst();
+                    while (!dentro.isEmpty() && dentro.getLast().equals(opExt))
+                        dentro.removeLast();
+                    for (int j = 1; j < dentro.size(); ) {
+                        if (dentro.get(j).equals(opExt) && dentro.get(j - 1).equals(opExt))
+                            dentro.remove(j);
+                        else
+                            j++;
+                    }
+
+                    lista.subList(abre, fecha + 3).clear();
+
+                    if (dentro.isEmpty()) {
+                        lista.add(abre, A);
+                    } else {
+                        lista.add(abre, A);
+                        lista.add(abre + 1, opExt);
+                        if (dentro.size() == 1) {
+                            lista.add(abre + 2, dentro.getFirst());
+                        } else {
+                            lista.add(abre + 2, "(");
+                            lista.addAll(abre + 3, dentro);
+                            lista.add(abre + 3 + dentro.size(), ")");
+                        }
+                    }
+                    mudou = true;
+                    break;
+                }
+            }
+
+        } while (mudou);
     }
 
     static void getResult(ArrayList<String> lista_resultado){
@@ -239,9 +372,8 @@ abstract class MetodosPrincipaisCorrecao {
 
             getResult(lista_resultado);
 
-            for (int i = 0; i < indice_final - indice_inicial + 1; i++){
-                lista.remove(indice_inicial);
-            }
+            for (int i = 0; i < indice_final - indice_inicial + 1; i++) lista.remove(indice_inicial);
+
 
             lista.add(indice_inicial, lista_resultado.getFirst());
 
@@ -259,6 +391,7 @@ abstract class MetodosPrincipaisCorrecao {
                     }
                 }
             }
+            tratarAbsorcao(lista);
         }
     }
 }
