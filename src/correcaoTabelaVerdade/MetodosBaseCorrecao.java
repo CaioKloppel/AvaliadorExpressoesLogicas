@@ -12,10 +12,10 @@ import java.util.List;
 abstract class MetodosBaseCorrecao {
     private static final Tabela tabela = new Tabela();
     private static final List<List<String>> PRECEDENCIA = List.of(
-            List.of("AND", "↑"),        // 1º
-            List.of("OR" , "↓"),        // 2º
-            List.of("->"),              // 3º
-            List.of("<->", "⊕")         // 4º
+            List.of("AND", "↑"),
+            List.of("OR" , "↓"),
+            List.of("->"),
+            List.of("<->", "⊕")
     );
     static int encontrarFechamento(ArrayList<String> lista, int indiceAbertura) {
         int contador = 1;
@@ -40,8 +40,8 @@ abstract class MetodosBaseCorrecao {
         for (String item : checker) {
             if (item.length() == 1 && Character.isLetter(item.charAt(0))) {
                 quantidadeVariaveis++;
-            }else if (tabela.getConectivos().contains(item)) {}
-             else if (item.length() == 1 && (item.charAt(0) == '~' || item.charAt(0) == '(' || item.charAt(0) == ')')){}
+            }else if (tabela.getConectivos().contains(item)) {continue;}
+             else if (item.length() == 1 && (item.charAt(0) == '~' || item.charAt(0) == '(' || item.charAt(0) == ')')){continue;}
              else {
                 System.out.println("Insira a questão novamente, ocorreu um erro de digitação, todos os itens devem estar separados por espaços: ");
                 String correcao = Input.getInstance().scanNextLine().toUpperCase();
